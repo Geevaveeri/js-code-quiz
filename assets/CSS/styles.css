@@ -4,3 +4,45 @@
     Padding: 0;
     }
     
+    /* header start*/
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.highscore {
+    margin: 25px 25px;
+    text-decoration: none;
+}
+
+#countdown {
+    margin: 25px 25px;
+
+}
+    /* header end */
+
+    /* main start */
+#main-quiz-area {
+    text-align: center;
+    margin-top: 50px;    
+}
+
+#main-quiz-area p {
+    margin: 20px 0;
+}
+
+#start-button {
+    padding: 10px 20px;
+    border-radius: 15%;
+    background-color: #9a4ef1;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.61);
+}
+
+#start-button:hover {
+    border-color: rgba(255,255,255,1);
+}
+    /* main end */
+
+    /* media query for phones */
