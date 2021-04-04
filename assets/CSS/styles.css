@@ -38,10 +38,29 @@
     color: #ffffff;
     text-decoration: none;
     box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.61);
+    margin: auto;
 }
 
 #start-button:hover {
     border-color: rgba(255,255,255,1);
+}
+
+.answer-button {
+    margin: 20px auto;
+    padding: 10px 10px;
+    border-radius: 15%;
+    background-color: #9a4ef1;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.61);
+    font-size: xx-large;
+    width: 50%;
+    
+}
+
+#quiz {
+    display: flex;
+    flex-direction: column;
 }
     /* main end */
 
