@@ -2,6 +2,9 @@ var timerEl = document.getElementById("countdown");
 var mainEl = document.getElementById("main-quiz-area");
 var startBtn = document.getElementById("start-button");
 var quizEl = document.getElementById("quiz");
+var answerArea = document.getElementById("answerResults");
+var currentQuestion = 0;
+var timeLeft = 75;
 var questions = [
     {
         q: "Commonly used data types DO Not Include:",
@@ -11,6 +14,8 @@ var questions = [
             c: "alerts",
             d: "numbers"
         },
+
+        // c
         a: "c"
     },
     {
@@ -21,6 +26,7 @@ var questions = [
             c: "for loops",
             d: "console.log",
         },
+        // d
         a: "d"
     },
     {
@@ -31,6 +37,7 @@ var questions = [
             c: "quotes",
             d: "parenthesis"
         },
+        // c
         a: "c"
     },
     {
@@ -41,6 +48,7 @@ var questions = [
             c: "parenthesis",
             d: "square brackets"
         },
+        // c
         a: "c"
     },
     {
@@ -51,13 +59,13 @@ var questions = [
             c: "booleans",
             d: "all of the above",
         },
+        // d
         a: "d"
     }
 ];
 
 // function that controls the timer
 function countdown() {
-    var timeLeft = 75;
 
     var timeInterval = setInterval(function () {
         if (timeLeft >= 1) {
@@ -79,32 +87,77 @@ var gameOver = function () {
 
 };
 
-// function that builds question and answers elements
-// function buildQuiz() {
-//     var questionAmount = questions.length;
-//     var askQuestion = questions.q;
-//     for (var i = 0; i > questionAmount; i++) {
-//         // create question element
-//         var questionArea = document.createElement("h1");
-//         questionArea.className = "quiz-question";
-//         questionArea.textContent = askQuestion;
+function buildQuiz() {
+
+    var askQuestion = questions[currentQuestion].q;
+
+    var quizEl = document.createElement("div");
+    quizEl.id = "quiz";
+    quizEl.addEventListener("click", answerButtonHandler);
+
+    mainEl.appendChild(quizEl);
 
 
-//         quizEl.appendChild(questionArea);
-//         console.log(questionArea);
-//     }
-//     return quizEl;
-// };
+    // create question element
+    var questionArea = document.createElement("h1");
+    questionArea.className = "quiz-question";
+    questionArea.textContent = askQuestion;
+
+    quizEl.appendChild(questionArea);
+
+    var currentAnswers = questions[currentQuestion].o;
+
+
+    for (const [key, value] of Object.entries(currentAnswers)) {
+
+        var questionAnswer1 = document.createElement("button");
+        questionAnswer1.className = "answer-button";
+        questionAnswer1.textContent = value;
+        questionAnswer1.setAttribute("btn-id", key);
+
+        quizEl.appendChild(questionAnswer1);
+        currentQuestion = 0;
+        currentQuestion++;
+    }
+
+};
+
+var answerButtonHandler = function (event) {
+    var currentAnswer = 0;
+    var targetEl = event.target;
+    var correctAnswer = questions[currentAnswer].a
+    
+    if (targetEl.matches(".answer-button")) {
+        targetEl = targetEl.getAttribute("btn-id")
+        if (targetEl === correctAnswer) {
+            deleteElements();
+            buildQuiz();
+            var printAnswer = document.createElement("h2");
+            printAnswer.textContent = "Correct!"
+            answerArea.appendChild(printAnswer);
+
+
+        }else {
+            deleteElements();
+            buildQuiz();
+            timeLeft = timeLeft - 10;
+            var printAnswer = document.createElement("h2");
+            printAnswer.textContent = "incorrect!"
+            answerArea.appendChild(printAnswer);
+        }
+        console.log(correctAnswer);
+        console.log(targetEl);
+        currentAnswer++
+        
+    }
+};
 
 var deleteElements = function () {
-    var elementSelected = document.querySelector(".starterP");
+
+    var elementSelected = document.querySelector("#quiz");
     elementSelected.remove();
 
-    var elementSelected = document.querySelector("h1");
-    elementSelected.remove();
 
-    var elementSelected = document.querySelector("#start-button");
-    elementSelected.remove();
 }
 // funcrtion to start the quiz
 var quizStart = function () {
@@ -112,53 +165,19 @@ var quizStart = function () {
     buildQuiz();
     countdown();
 
-
-
-    function buildQuiz() {
-        var questionAmount = questions.length;
-
-        for (var i = 0; i < questionAmount; i++) {
-            var askQuestion = questions[i].q;
-            var answerBtnTxt = questions[i].o;
-            // create question element
-            var questionArea = document.createElement("h1");
-            questionArea.className = "quiz-question";
-            questionArea.textContent = askQuestion;
-
-            quizEl.appendChild(questionArea);
-
-            var questionAnswer1 = document.createElement("button");
-            questionAnswer1.className = "answer-button";
-            questionAnswer1.textContent = answerBtnTxt.a;
-
-            quizEl.appendChild(questionAnswer1);
-
-            var questionAnswer2 = document.createElement("button");
-            questionAnswer2.className = "answer-button";
-            questionAnswer2.textContent = answerBtnTxt.b;
-
-            quizEl.appendChild(questionAnswer2);
-
-            var questionAnswer3 = document.createElement("button");
-            questionAnswer3.className = "answer-button";
-            questionAnswer3.textContent = answerBtnTxt.c;
-
-            quizEl.appendChild(questionAnswer3);
-
-            var questionAnswer4 = document.createElement("button");
-            questionAnswer4.className = "answer-button";
-            questionAnswer4.textContent = answerBtnTxt.c;
-
-            quizEl.appendChild(questionAnswer4);
-
-
-            debugger;
-            break;
-        }
-
-    };
-
 };
+// var changeQuiz = function() {
+//     var oldQuestion = document.querySelector("#quiz-question");
+//     var newQuestion = questions[]
+// }
 
-console.log(questions.length);
+
+// event listeners
 startBtn.addEventListener("click", quizStart);
+quizEl.addEventListener("click", answerButtonHandler);
+
+
+// buckles advice-
+// I would do a for loop to generate the answers
+// And if ur quiz is single page then I would loop to generate the questions and embed the answer generating for loop inside it
+// If you're only showing one question at a time then either rerun the element generator on each new question with ur new data or be super big brain and update the existing elements in place
