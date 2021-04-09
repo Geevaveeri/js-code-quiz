@@ -145,16 +145,20 @@ var gameOver = function () {
         savedScore.push(savedScoreObj);
         localStorage.setItem("highscore", JSON.stringify(savedScore));
         window.location.href = "/highscore.html";
-        
-        
+
+
     })
 
 };
 
 // function to update high score
 
-var loadScore = function(){
+var loadScore = function () {
     savedScore = localStorage.getItem("highscore");
+    if (!savedScore) {
+        savedScore = [];
+        return false;
+    }
 
     savedScore = JSON.parse(savedScore);
 };
