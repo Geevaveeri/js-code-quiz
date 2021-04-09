@@ -144,7 +144,7 @@ var gameOver = function () {
 
         savedScore.push(savedScoreObj);
         localStorage.setItem("highscore", JSON.stringify(savedScore));
-        window.location.href = "highscore.html";
+        window.location.href = "https://geevaveeri.github.io/js-code-quiz/highscore.html";
 
 
     })
